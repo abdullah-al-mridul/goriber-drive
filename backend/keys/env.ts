@@ -4,6 +4,7 @@ interface Env {
   PASSWORD: string | undefined;
   JWT_SECRET: string | undefined;
   JWT_EXPIRE: string | undefined;
+  DATA_PATH: string | undefined;
 }
 
 const env: Env = {
@@ -12,6 +13,7 @@ const env: Env = {
   PASSWORD: process.env.PASSWORD,
   JWT_SECRET: process.env.JWT_SECRET,
   JWT_EXPIRE: process.env.JWT_EXPIRE,
+  DATA_PATH: process.env.DATA_PATH,
 };
 export default env;
 module.exports = env;

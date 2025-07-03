@@ -21,7 +21,9 @@ const auth = (req: any, res: any, next: NextFunction) => {
         .status(401)
         .json({ message: "Unauthorized", email: env.EMAIL });
     }
-    req.user = decoded;
+    req.user = {
+      email: email,
+    };
 
     // console.log(decoded);
     next();
