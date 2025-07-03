@@ -16,12 +16,10 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     newPin[index] = value;
     setPin(newPin);
 
-    // Move to next input
     if (value && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
 
-    // Optional: auto-submit when all filled
     if (newPin.every((digit) => digit !== "")) {
       setTimeout(() => {
         onLogin();
