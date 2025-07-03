@@ -56,6 +56,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               ref={(el) => {
                 inputRefs.current[i] = el;
               }}
+              autoFocus={i === 0}
               onChange={(e) => handleChange(e.target.value, i)}
               className="w-10 h-12 rounded-md bg-[rgb(100,116,139)]/25 focus:blur-0 blur-sm focus:scale-110 text-white text-center text-xl outline-none  transition-all"
             />
