@@ -169,4 +169,35 @@ fileRouter.get("/download", auth, (req: any, res: any) => {
   }
 });
 
+fileRouter.delete("/delete", auth, (req: any, res: any) => {
+  const { filename } = req.query;
+  const uploadDir = env.DATA_PATH;
+  if (!filename || typeof filename !== "string" || filename.trim() === "") {
+    return res.status(400).json({ message: "Filename is required" });
+  }
+  if (
+    typeof uploadDir === "string" &&
+    uploadDir.trim() !== "" &&
+    fs.existsSync(uploadDir) &&
+    fs.statSync(uploadDir).isDirectory()
+  ) {
+    const filePath = path.join(uploadDir, filename);
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ message: "File not found" });
+    }
+    fs.unlink(filePath, (err) => {
+      if (err) {
+        console.error("Error deleting file:", err);
+        return res.status(500).json({ message: "Internal server error" });
+      }
+      res.status(200).json({ message: "File deleted successfully" });
+    });
+  } else {
+    console.error(
+      "DATA_PATH is not set or is not a string. If data path set then make sure it is a valid folder in that directory ."
+    );
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 export default fileRouter;
