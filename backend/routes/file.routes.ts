@@ -85,9 +85,12 @@ fileRouter.get("/files", auth, (req: any, res: any) => {
   }
 });
 
-fileRouter.get("fileInfo/:filename", auth, (req: any, res: any) => {
-  const { filename } = req.params;
+fileRouter.get("/fileInfo", auth, (req: any, res: any) => {
+  const { filename } = req.query;
   const uploadDir = env.DATA_PATH;
+  if (!filename || typeof filename !== "string" || filename.trim() === "") {
+    return res.status(400).json({ message: "Filename is required" });
+  }
   if (
     typeof uploadDir === "string" &&
     uploadDir.trim() !== "" &&
@@ -95,12 +98,15 @@ fileRouter.get("fileInfo/:filename", auth, (req: any, res: any) => {
     fs.statSync(uploadDir).isDirectory()
   ) {
     const filePath = path.join(uploadDir, filename);
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ message: "File not found" });
+    }
     fs.stat(filePath, (err, stats) => {
       if (err) {
         console.error("Error getting file stats:", err);
         return res.status(500).json({ message: "Internal server error" });
       }
-
+      console.log(stats);
       res.status(200).json({
         name: filename,
         size: stats.size,
