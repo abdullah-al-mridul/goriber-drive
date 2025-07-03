@@ -5,6 +5,7 @@ interface Env {
   JWT_SECRET: string | undefined;
   JWT_EXPIRE: string | undefined;
   DATA_PATH: string | undefined;
+  MAX_FILE_PER_PAGE: number;
 }
 
 const env: Env = {
@@ -14,6 +15,9 @@ const env: Env = {
   JWT_SECRET: process.env.JWT_SECRET,
   JWT_EXPIRE: process.env.JWT_EXPIRE,
   DATA_PATH: process.env.DATA_PATH,
+  MAX_FILE_PER_PAGE: process.env.MAX_FILE_PER_PAGE
+    ? parseInt(process.env.MAX_FILE_PER_PAGE, 10)
+    : 20,
 };
 export default env;
 module.exports = env;

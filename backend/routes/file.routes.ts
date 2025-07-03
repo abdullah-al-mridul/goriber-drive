@@ -63,23 +63,38 @@ fileRouter.post("/upload", auth, (req: any, res: any) => {
 
 fileRouter.get("/files", auth, (req: any, res: any) => {
   const uploadDir = env.DATA_PATH;
+  const maxLimit = env.MAX_FILE_PER_PAGE;
+
   if (
     typeof uploadDir === "string" &&
     uploadDir.trim() !== "" &&
     fs.existsSync(uploadDir) &&
     fs.statSync(uploadDir).isDirectory()
   ) {
+    const page = parseInt(req.query.page) || 1;
+    const limit = maxLimit;
+    const offset = (page - 1) * limit;
+
     fs.readdir(uploadDir, (err, files) => {
       if (err) {
         console.error("Error reading directory:", err);
         return res.status(500).json({ message: "Internal server error" });
       }
-      console.log(files);
-      res.status(200).json(files);
+
+      const totalFiles = files.length;
+      const pagedFiles = files.slice(offset, offset + limit);
+
+      res.status(200).json({
+        page,
+        perPage: limit,
+        total: totalFiles,
+        totalPages: Math.ceil(totalFiles / limit),
+        data: pagedFiles,
+      });
     });
   } else {
     console.error(
-      "DATA_PATH is not set or is not a string. If data path set then make sure it is a valid folder in that directory ."
+      "DATA_PATH is not set or is not a string. If data path set then make sure it is a valid folder in that directory."
     );
     return res.status(500).json({ message: "Internal server error" });
   }
