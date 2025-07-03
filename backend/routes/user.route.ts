@@ -47,4 +47,4 @@ userRouter.get("/user", auth, (req: any, res: any) => {
   }
 });
 export default userRouter;
-module.exports = userRouter;
+// module.exports = userRouter;

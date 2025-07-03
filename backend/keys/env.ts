@@ -20,4 +20,4 @@ const env: Env = {
     : 20,
 };
 export default env;
-module.exports = env;
+// module.exports = env;

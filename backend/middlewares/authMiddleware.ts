@@ -32,4 +32,4 @@ const auth = (req: any, res: any, next: NextFunction) => {
   }
 };
 export default auth;
-module.exports = auth;
+// module.exports = auth;

@@ -20,4 +20,4 @@ const generateToken = (
   return jwt.sign(payload, secret, options);
 };
 export default generateToken;
-module.exports = generateToken;
+// module.exports = generateToken;

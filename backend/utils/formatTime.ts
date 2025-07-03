@@ -19,4 +19,4 @@ const formatTimestamp = () => {
 };
 
 export default formatTimestamp;
-module.exports = formatTimestamp;
+// module.exports = formatTimestamp;
