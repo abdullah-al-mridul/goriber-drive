@@ -22,7 +22,7 @@ interface UserStore {
   logout: () => Promise<void>;
 }
 
-const useUserStore = create<UserStore>((set) => ({
+const useUserStore = create<UserStore>((set, get) => ({
   user: null,
   isLoggedIn: false,
   loading: true,
@@ -51,6 +51,7 @@ const useUserStore = create<UserStore>((set) => ({
         password: pin,
       });
       console.log(userInfo);
+      // set({ email: userInfo.user.user.email });
       set({ user: userInfo });
       setLoading(false);
     } catch (error: object | any) {
@@ -61,8 +62,11 @@ const useUserStore = create<UserStore>((set) => ({
   },
   logout: async () => {
     try {
+      // console.log(get().user?.user.email);
+      // set({ email: get().user?.user?.email });
       const response: any = await api.get("/user-api/logout");
       set({ user: null });
+      get().getUser();
       console.log(response);
     } catch (err) {
       console.log(err);
