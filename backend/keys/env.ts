@@ -6,6 +6,7 @@ interface Env {
   JWT_EXPIRE: string | undefined;
   DATA_PATH: string | undefined;
   MAX_FILE_PER_PAGE: number;
+  CLIENT_URL?: string;
 }
 
 const env: Env = {
@@ -18,6 +19,7 @@ const env: Env = {
   MAX_FILE_PER_PAGE: process.env.MAX_FILE_PER_PAGE
     ? parseInt(process.env.MAX_FILE_PER_PAGE, 10)
     : 20,
+  CLIENT_URL: process.env.CLIENT_URL,
 };
 export default env;
 // module.exports = env;

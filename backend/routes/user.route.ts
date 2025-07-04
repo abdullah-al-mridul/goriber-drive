@@ -46,5 +46,13 @@ userRouter.get("/user", auth, (req: any, res: any) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 });
+userRouter.get("/logout", (req: any, res: any) => {
+  try {
+    res.clearCookie("token");
+    return res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.error("Logout error:", error);
+  }
+});
 export default userRouter;
 // module.exports = userRouter;

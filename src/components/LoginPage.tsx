@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import Logo from "../assets/img/logo.png";
 import { CircleUser } from "lucide-react";
+import useUserStore from "../store/user.store";
 interface LoginPageProps {
   onLogin: (
     pin: string,
@@ -19,6 +20,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const { email } = useUserStore();
   const handleChange = (value: string, index: number) => {
     if (!/^\d?$/.test(value)) return;
 
@@ -75,7 +77,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
           <span className="text-gray-500">
             <CircleUser />
           </span>
-          <span>rim89987@proton.me</span>
+          <span>{email}</span>
         </div>
         {/* PIN Input */}
         {loading ? (

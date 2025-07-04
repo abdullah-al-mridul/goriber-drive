@@ -59,7 +59,7 @@ const FileCard: React.FC<FileCardProps> = ({ file }) => {
 
   return (
     <div
-      className="bg-gray-800 border border-gray-700 rounded-lg p-3 sm:p-4 hover:bg-gray-750 hover:border-gray-600 transition-all duration-200 cursor-pointer group"
+      className="bg-[rgba(100,116,139)]/10 border border-white/10 rounded-lg p-3 sm:p-4 hover:bg-gray-750 hover:border-white/15 transition-all duration-200 cursor-pointer group"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -77,7 +77,7 @@ const FileCard: React.FC<FileCardProps> = ({ file }) => {
             isHovered ? "opacity-100" : "opacity-0"
           }`}
         >
-          <button className="p-1 rounded hover:bg-gray-700 transition-colors">
+          <button className="p-1 rounded hover:bg-gray-700/50 transition-colors">
             <MoreVertical className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
           </button>
         </div>
@@ -103,14 +103,14 @@ const FileCard: React.FC<FileCardProps> = ({ file }) => {
             isHovered ? "opacity-100" : "opacity-0"
           }`}
         >
-          <button className="p-1 rounded hover:bg-gray-700 transition-colors">
-            <Eye className="w-3 h-3 text-gray-400 hover:text-white" />
+          <button className="p-1 rounded hover:bg-gray-700/50 transition-colors">
+            <Eye className="w-3 h-3 text-gray-400 " />
           </button>
-          <button className="p-1 rounded hover:bg-gray-700 transition-colors">
-            <Download className="w-3 h-3 text-gray-400 hover:text-white" />
+          <button className="p-1 rounded hover:bg-gray-700/50 transition-colors">
+            <Download className="w-3 h-3 text-gray-400 " />
           </button>
-          <button className="p-1 rounded hover:bg-gray-700 transition-colors">
-            <Share className="w-3 h-3 text-gray-400 hover:text-white" />
+          <button className="p-1 rounded hover:bg-gray-700/50 transition-colors">
+            <Share className="w-3 h-3 text-gray-400 " />
           </button>
         </div>
       </div>
