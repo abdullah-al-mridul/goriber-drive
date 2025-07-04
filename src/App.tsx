@@ -1,12 +1,17 @@
-import React, { useState } from 'react';
-import LoginPage from './components/LoginPage';
-import Dashboard from './components/Dashboard';
+import React, { useState, type Dispatch, type SetStateAction } from "react";
+import LoginPage from "./components/LoginPage";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const handleLogin = () => {
-    setIsAuthenticated(true);
+  const handleLogin = (
+    pin: string,
+    setLoading: Dispatch<SetStateAction<boolean>>,
+    setError: Dispatch<SetStateAction<string | null>>
+  ) => {
+    console.log(pin);
+    // setIsAuthenticated(true);
   };
 
   const handleLogout = () => {
