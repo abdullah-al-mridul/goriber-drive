@@ -5,13 +5,13 @@ import env from "../keys/env";
 import auth from "../middlewares/authMiddleware";
 import busboy from "busboy";
 import formatTimestamp from "../utils/formatTime";
-
+import { formatBytes, timeAgo } from "../utils/gen";
 const fileRouter = Router();
 
 fileRouter.post("/upload", auth, (req: any, res: any) => {
   const bb = busboy({ headers: req.headers });
-
   const uploadDir = env.DATA_PATH;
+
   if (
     typeof uploadDir === "string" &&
     uploadDir.trim() !== "" &&
@@ -22,24 +22,39 @@ fileRouter.post("/upload", auth, (req: any, res: any) => {
       fs.mkdirSync(uploadDir, { recursive: true });
     }
 
+    const uploadedFileInfo: {
+      name: string;
+      size: string;
+      extension: string;
+      createdAt: string;
+    }[] = [];
+
     bb.on("file", (name, file, info) => {
-      const { filename, encoding, mimeType } = info;
-      console.log(`File [${name}]: filename: %j`, filename);
+      const { filename } = info;
       const ext = path.extname(filename);
       const base = path.basename(filename.replace(/\s+/g, ""), ext);
       const timestamp = formatTimestamp();
       const finalName = `${base}-${timestamp}${ext}`;
       const saveTo = path.join(uploadDir, finalName);
       const writeStream = fs.createWriteStream(saveTo);
+      let fileSize = 0;
 
       file.pipe(writeStream);
 
       file.on("data", (data) => {
-        console.log(`File [${name}] got ${data.length} bytes`);
+        fileSize += data.length;
       });
 
       file.on("close", () => {
-        console.log(`File [${name}] upload done → Saved to: ${saveTo}`);
+        const stats = fs.statSync(saveTo);
+        uploadedFileInfo.push({
+          name: finalName,
+          size: formatBytes(fileSize),
+          extension: ext.replace(".", "") || "unknown",
+          createdAt: timeAgo(stats.birthtime),
+        });
+
+        console.log(`Upload finished: ${finalName}`);
       });
     });
 
@@ -48,16 +63,17 @@ fileRouter.post("/upload", auth, (req: any, res: any) => {
     });
 
     bb.on("close", () => {
-      console.log("File upload finished");
-      res.status(200).json({ message: "Upload complete." });
+      if (uploadedFileInfo.length > 0) {
+        res.status(200).json({ files: uploadedFileInfo });
+      } else {
+        res.status(400).json({ message: "No file uploaded" });
+      }
     });
 
     req.pipe(bb);
   } else {
-    console.error(
-      "DATA_PATH is not set or is not a string. If data path set then make sure it is a valid folder in that directory ."
-    );
-    return res.status(500).json({ message: "Internal server error" });
+    console.error("Upload dir not configured properly");
+    res.status(500).json({ message: "Server error: Invalid upload path" });
   }
 });
 
@@ -71,7 +87,7 @@ fileRouter.get("/files", auth, (req: any, res: any) => {
     fs.existsSync(uploadDir) &&
     fs.statSync(uploadDir).isDirectory()
   ) {
-    const page = parseInt(req.query.page) || 1;
+    const page = parseInt(req.query.page as string) || 1;
     const limit = maxLimit;
     const offset = (page - 1) * limit;
 
@@ -84,12 +100,24 @@ fileRouter.get("/files", auth, (req: any, res: any) => {
       const totalFiles = files.length;
       const pagedFiles = files.slice(offset, offset + limit);
 
+      const fileDetails = pagedFiles.map((filename) => {
+        const fullPath = path.join(uploadDir, filename);
+        const stat = fs.statSync(fullPath);
+
+        return {
+          name: filename,
+          size: formatBytes(stat.size),
+          extension: path.extname(filename).replace(".", "") || "unknown",
+          createdAt: timeAgo(stat.birthtime),
+        };
+      });
+
       res.status(200).json({
         page,
         perPage: limit,
         total: totalFiles,
         totalPages: Math.ceil(totalFiles / limit),
-        data: pagedFiles,
+        data: fileDetails,
       });
     });
   } else {

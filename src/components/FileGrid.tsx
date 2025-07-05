@@ -1,22 +1,31 @@
-import React, { useState } from "react";
-import { mockFiles } from "../data/mockData";
+import React, { useEffect } from "react";
 import FileCard from "./FileCard";
-import FileListItem from "./FileListItem";
-import { Upload, Filter, SortAsc, Grid, List } from "lucide-react";
-
+import { Upload, Filter, SortAsc } from "lucide-react";
+import useFileStore from "../store/files.store";
+import Logo from "../assets/img/logo.png";
 interface FileGridProps {
   searchQuery: string;
   viewMode: "grid" | "list";
 }
 
-const FileGrid: React.FC<FileGridProps> = ({ searchQuery, viewMode }) => {
-  const [files] = useState(mockFiles);
-  const [currentViewMode, setCurrentViewMode] = useState(viewMode);
-
-  const filteredFiles = files.filter((file) =>
+const FileGrid: React.FC<FileGridProps> = ({ searchQuery }) => {
+  const { getFiles, files: filesFetched, loading } = useFileStore();
+  const filteredFiles = filesFetched?.filter((file) =>
     file.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
+  useEffect(() => {
+    getFiles(1);
+  }, [getFiles]);
+  useEffect(() => {
+    console.log("file fetched top", filesFetched);
+  }, [filesFetched]);
+  if (loading) {
+    return (
+      <div className=" flex items-center justify-center h-full">
+        <img src={Logo} alt="Logo" />
+      </div>
+    );
+  }
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Header */}
@@ -26,36 +35,28 @@ const FileGrid: React.FC<FileGridProps> = ({ searchQuery, viewMode }) => {
             My Files
           </h2>
           <p className="text-gray-400 text-sm">
-            {filteredFiles.length}{" "}
-            {filteredFiles.length === 1 ? "file" : "files"}
+            {filteredFiles?.length}{" "}
+            {filteredFiles?.length === 1 ? "file" : "files"}
             {searchQuery && ` matching "${searchQuery}"`}
           </p>
         </div>
 
         <div className="flex items-center justify-between sm:justify-end space-x-2">
           {/* Mobile View Toggle */}
-          <div className="sm:hidden flex items-center bg-gray-700 rounded p-1">
+          {/* <div className="sm:hidden flex items-center bg-gray-700 rounded p-1">
             <button
-              onClick={() => setCurrentViewMode("grid")}
-              className={`p-1.5 rounded transition-colors ${
-                currentViewMode === "grid"
-                  ? "bg-blue-600 text-white"
-                  : "text-gray-400 hover:text-white"
-              }`}
+              // onClick={() => setCurrentViewMode("grid")}
+              className={`p-1.5 rounded transition-colors bg-blue-600 text-white`}
             >
               <Grid className="w-4 h-4" />
             </button>
             <button
-              onClick={() => setCurrentViewMode("list")}
-              className={`p-1.5 rounded transition-colors ${
-                currentViewMode === "list"
-                  ? "bg-blue-600 text-white"
-                  : "text-gray-400 hover:text-white"
-              }`}
+              // onClick={() => setCurrentViewMode("list")}
+              className={`p-1.5 rounded transition-colors text-gray-400 hover:text-white`}
             >
               <List className="w-4 h-4" />
             </button>
-          </div>
+          </div> */}
 
           {/* Filter & Sort */}
           <div className="flex items-center space-x-2">
@@ -93,7 +94,7 @@ const FileGrid: React.FC<FileGridProps> = ({ searchQuery, viewMode }) => {
             Total Files
           </div>
           <div className="text-white text-lg sm:text-xl font-semibold">
-            {filteredFiles.length}
+            {filesFetched?.length}
           </div>
         </div>
 
@@ -120,7 +121,7 @@ const FileGrid: React.FC<FileGridProps> = ({ searchQuery, viewMode }) => {
       </div>
 
       {/* Files Display */}
-      {filteredFiles.length === 0 ? (
+      {filesFetched?.length === 0 || filesFetched === null ? (
         <div className="text-center py-12 sm:py-20">
           <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gray-700 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6">
             <Upload className="w-8 h-8 sm:w-10 sm:h-10 text-gray-400" />
@@ -133,27 +134,21 @@ const FileGrid: React.FC<FileGridProps> = ({ searchQuery, viewMode }) => {
               ? "Try adjusting your search query"
               : "Upload your first file to get started"}
           </p>
-          {!searchQuery && (
+          {/* {!searchQuery && (
             <button className="bg-blue-600 text-white px-6 py-2 rounded font-medium hover:bg-blue-700 transition-colors">
               Upload Files
             </button>
-          )}
+          )} */}
         </div>
       ) : (
         <div
           className={
-            currentViewMode === "grid"
-              ? "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4"
-              : "space-y-2"
+            "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4"
           }
         >
-          {filteredFiles.map((file) =>
-            currentViewMode === "grid" ? (
-              <FileCard key={file.id} file={file} />
-            ) : (
-              <FileListItem key={file.id} file={file} />
-            )
-          )}
+          {filesFetched?.map((file) => (
+            <FileCard key={file.name} file={file} />
+          ))}
         </div>
       )}
     </div>

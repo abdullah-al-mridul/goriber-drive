@@ -8,7 +8,6 @@ import {
   File,
   MoreVertical,
   Download,
-  Star,
   Share,
   Eye,
 } from "lucide-react";
@@ -18,44 +17,64 @@ interface FileCardProps {
   file: FileType;
 }
 
-const getFileIcon = (type: string) => {
-  switch (type) {
-    case "image":
-      return Image;
-    case "video":
-      return Video;
-    case "audio":
-      return Music;
-    case "document":
-      return FileText;
-    case "archive":
-      return Archive;
-    default:
-      return File;
-  }
+const getFileIcon = (ext: string) => {
+  const imageExts = ["jpg", "jpeg", "png", "gif", "bmp", "svg", "webp"];
+  const videoExts = ["mp4", "mkv", "avi", "mov", "webm", "flv"];
+  const audioExts = ["mp3", "wav", "aac", "ogg", "flac"];
+  const documentExts = [
+    "pdf",
+    "doc",
+    "docx",
+    "txt",
+    "xls",
+    "xlsx",
+    "ppt",
+    "pptx",
+  ];
+  const archiveExts = ["zip", "rar", "7z", "tar", "gz"];
+
+  ext = ext.toLowerCase();
+
+  if (imageExts.includes(ext)) return Image;
+  if (videoExts.includes(ext)) return Video;
+  if (audioExts.includes(ext)) return Music;
+  if (documentExts.includes(ext)) return FileText;
+  if (archiveExts.includes(ext)) return Archive;
+
+  return File;
 };
 
-const getFileColor = (type: string) => {
-  switch (type) {
-    case "image":
-      return "text-green-400";
-    case "video":
-      return "text-red-400";
-    case "audio":
-      return "text-purple-400";
-    case "document":
-      return "text-blue-400";
-    case "archive":
-      return "text-yellow-400";
-    default:
-      return "text-gray-400";
-  }
+const getFileColor = (ext: string): string => {
+  const imageExts = ["jpg", "jpeg", "png", "gif", "bmp", "svg", "webp"];
+  const videoExts = ["mp4", "mkv", "avi", "mov", "webm", "flv"];
+  const audioExts = ["mp3", "wav", "aac", "ogg", "flac"];
+  const documentExts = [
+    "pdf",
+    "doc",
+    "docx",
+    "txt",
+    "xls",
+    "xlsx",
+    "ppt",
+    "pptx",
+  ];
+  const archiveExts = ["zip", "rar", "7z", "tar", "gz"];
+
+  ext = ext.toLowerCase();
+
+  if (imageExts.includes(ext)) return "text-green-400";
+  if (videoExts.includes(ext)) return "text-red-400";
+  if (audioExts.includes(ext)) return "text-purple-400";
+  if (documentExts.includes(ext)) return "text-blue-400";
+  if (archiveExts.includes(ext)) return "text-yellow-400";
+
+  return "text-gray-400";
 };
 
 const FileCard: React.FC<FileCardProps> = ({ file }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const IconComponent = getFileIcon(file.type);
-  const iconColor = getFileColor(file.type);
+  const IconComponent = getFileIcon(file.extension);
+  const iconColor = getFileColor(file.extension);
 
   return (
     <div
@@ -67,9 +86,6 @@ const FileCard: React.FC<FileCardProps> = ({ file }) => {
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center space-x-2">
           <IconComponent className={`w-6 h-6 sm:w-8 sm:h-8 ${iconColor}`} />
-          {file.starred && (
-            <Star className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 fill-current" />
-          )}
         </div>
 
         <div
@@ -96,7 +112,7 @@ const FileCard: React.FC<FileCardProps> = ({ file }) => {
 
       {/* Footer */}
       <div className="flex items-center justify-between">
-        <span className="text-gray-500 text-xs">{file.modified}</span>
+        <span className="text-gray-500 text-xs">{file.createdAt}</span>
 
         <div
           className={`flex items-center space-x-1 transition-all duration-200 ${

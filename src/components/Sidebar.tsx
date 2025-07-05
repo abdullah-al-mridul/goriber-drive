@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import {
   Home,
   Folder,
@@ -6,28 +6,43 @@ import {
   Trash2,
   Clock,
   Users,
-  Upload,
-  HardDrive,
   X,
   CircleUser,
 } from "lucide-react";
 import useUserStore from "../store/user.store";
+import useFileStore from "../store/files.store";
 
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+const menuItems = [
+  { icon: Home, label: "Home", active: true, count: null },
+  { icon: Folder, label: "My Files", active: false, count: 48 },
+  { icon: Users, label: "Shared", active: false, count: 12 },
+  { icon: Star, label: "Starred", active: false, count: 5 },
+  { icon: Clock, label: "Recent", active: false, count: null },
+  { icon: Trash2, label: "Trash", active: false, count: 3 },
+];
 const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-  const menuItems = [
-    { icon: Home, label: "Home", active: true, count: null },
-    { icon: Folder, label: "My Files", active: false, count: 48 },
-    { icon: Users, label: "Shared", active: false, count: 12 },
-    { icon: Star, label: "Starred", active: false, count: 5 },
-    { icon: Clock, label: "Recent", active: false, count: null },
-    { icon: Trash2, label: "Trash", active: false, count: 3 },
-  ];
   const { user } = useUserStore();
+  const { fileUpload } = useFileStore();
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      console.error("No file selected");
+      return;
+    }
+    const fileList = Array.from(files);
+    fileList.forEach((file) => {
+      fileUpload(file);
+    });
+  };
   return (
     <>
       {/* Mobile Overlay */}
@@ -59,8 +74,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
 
           <div className="flex-1 p-4 space-y-6">
             {/* Upload Button */}
-
+            <input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              onChange={handleFileChange}
+              multiple
+            />
             <button
+              onClick={handleButtonClick}
               className="  bg-blue-400/10 w-full text-blue-400 text-xl font-semibold py-5 border border-dashed border-blue-400/20 rounded hover:scale-95 transition-all"
               id="upload-button"
             >
