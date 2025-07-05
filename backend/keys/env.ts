@@ -7,6 +7,8 @@ interface Env {
   DATA_PATH: string | undefined;
   MAX_FILE_PER_PAGE: number;
   CLIENT_URL?: string;
+  CLIENT_URL_IP?: string;
+  CLIENT_URL_IP_PORT?: string;
 }
 
 const env: Env = {
@@ -20,6 +22,8 @@ const env: Env = {
     ? parseInt(process.env.MAX_FILE_PER_PAGE, 10)
     : 20,
   CLIENT_URL: process.env.CLIENT_URL,
+  CLIENT_URL_IP: process.env.CLIENT_URL_IP,
+  CLIENT_URL_IP_PORT: process.env.CLIENT_URL_IP_PORT,
 };
 export default env;
 // module.exports = env;

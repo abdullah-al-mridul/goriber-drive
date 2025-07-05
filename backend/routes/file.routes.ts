@@ -32,7 +32,10 @@ fileRouter.post("/upload", auth, (req: any, res: any) => {
     bb.on("file", (name, file, info) => {
       const { filename } = info;
       const ext = path.extname(filename);
-      const base = path.basename(filename.replace(/\s+/g, ""), ext);
+      const base = path.basename(
+        filename.replace(/[\/\\?%*:|"<>]/g, "").replace(/\s+/g, "_"),
+        ext
+      );
       const timestamp = formatTimestamp();
       const finalName = `${base}-${timestamp}${ext}`;
       const saveTo = path.join(uploadDir, finalName);
