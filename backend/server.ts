@@ -22,10 +22,10 @@ server.use(
     origin: function (origin, callback) {
       if (!origin) return callback(null, true);
       if (allowedOrigins.indexOf(origin) !== -1) {
-        console.log("incoming origin", origin);
+        // console.log("incoming origin", origin);
         callback(null, true);
       } else {
-        console.log("incoming origin", origin);
+        // console.log("incoming origin", origin);
         callback(new Error("Not allowed by CORS"));
       }
     },

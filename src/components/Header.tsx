@@ -1,12 +1,10 @@
 import React from "react";
-import { Search, Grid, List, User, LogOut, Menu, X } from "lucide-react";
+import { Search, LogOut, Menu, X } from "lucide-react";
 import Logo from "../assets/img/logo.png";
 interface HeaderProps {
   onLogout: () => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  viewMode: "grid" | "list";
-  setViewMode: (mode: "grid" | "list") => void;
   sidebarOpen: boolean;
   setSidebarOpen: (open: boolean) => void;
 }
@@ -15,8 +13,6 @@ const Header: React.FC<HeaderProps> = ({
   onLogout,
   searchQuery,
   setSearchQuery,
-  viewMode,
-  setViewMode,
   sidebarOpen,
   setSidebarOpen,
 }) => {

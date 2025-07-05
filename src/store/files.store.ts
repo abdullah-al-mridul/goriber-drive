@@ -10,10 +10,11 @@ interface FileInterface {
   createdAt: string;
 }
 
-interface FileUploadingItem {
+export interface FileUploadingItem {
   name: string;
   size: string;
   progress: number;
+  isFinished: boolean;
 }
 
 interface FileStore {
@@ -24,7 +25,7 @@ interface FileStore {
   fileUpload: (file: any) => Promise<void>;
 }
 
-const useFileStore = create<FileStore>((set) => ({
+const useFileStore = create<FileStore>((set, get) => ({
   loading: true,
   files: null,
   fileUploading: [],
@@ -49,14 +50,17 @@ const useFileStore = create<FileStore>((set) => ({
     const size = formatBytes(file.size);
 
     set((state) => ({
-      fileUploading: [...state.fileUploading, { name, size, progress: 0 }],
+      fileUploading: [
+        ...state.fileUploading,
+        { name, size, progress: 0, isFinished: false },
+      ],
     }));
 
     try {
       const formData = new FormData();
       formData.append("file", file);
 
-      await api.post("/file-api/upload", formData, {
+      const upRes: any = await api.post("/file-api/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -67,14 +71,20 @@ const useFileStore = create<FileStore>((set) => ({
 
           set((state) => ({
             fileUploading: state.fileUploading.map((f) =>
-              f.name === name ? { ...f, progress: percent } : f
+              f.name === name
+                ? { ...f, progress: percent, isFinished: percent === 100 }
+                : f
             ),
           }));
 
-          console.log(`${name}: ${percent}%`);
+          // console.log(`${name}: ${percent}%`);
         },
       });
-
+      const files = get().files;
+      upRes.files.map((file: FileInterface) => {
+        files?.unshift(file);
+      });
+      set({ files });
       console.log("Upload success:", file.name);
     } catch (err) {
       console.error("Upload failed:", err);

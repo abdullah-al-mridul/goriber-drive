@@ -20,7 +20,7 @@ const timeAgo = (date: Date) => {
     if (count >= 1) return `${count} ${label}${count > 1 ? "s" : ""} ago`;
   }
 
-  return "just now";
+  return "Just now";
 };
 const formatTimestampUpload = () => {
   const now = new Date();

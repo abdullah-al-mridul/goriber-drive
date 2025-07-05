@@ -5,7 +5,6 @@ import useFileStore from "../store/files.store";
 import Logo from "../assets/img/logo.png";
 interface FileGridProps {
   searchQuery: string;
-  viewMode: "grid" | "list";
 }
 
 const FileGrid: React.FC<FileGridProps> = ({ searchQuery }) => {
