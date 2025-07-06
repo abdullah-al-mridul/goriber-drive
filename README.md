@@ -4,12 +4,11 @@
 
 # Goriber Drive
 
-> Your personal cloud, hosted right from your own hard drive!  
-> No subscription. No storage limits (except your own HDD 😅).
+## Your personal cloud, hosted right from your own hard drive!
+
+## No subscription. No storage limits (except your own HDD 😅)
 
 ---
-
-### 📸 Previews
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/abdullah-al-mridul/goriber-drive/refs/heads/main/public/img/goriber-drive-banner.png" alt="Goriber Drive Homepage" width="800"/>
@@ -23,29 +22,18 @@
 
 ---
 
-## 🚀 What is Goriber Drive?
+## What is Goriber Drive?
 
 **Goriber Drive** is a self-hosted cloud storage solution for developers, students, and broke legends who want full control over their files, stored directly in their own PC or mobile device.
 
-### ✅ Features
+### Features
 
-- 📁 Upload, download, and manage files (locally stored)
-- 🔒 User authentication (login/signup)
-- 📱 Mobile & 💻 Desktop responsive UI
-- 🌗 Dark & clean professional design (Material UI inspired)
-- 🚀 Fast and lightweight frontend with React
-- ⚙️ Backend with Node.js & Express
-- 🧠 Smart file previews & info cards
+- Upload, download, and manage files (locally stored)
+- User authentication (login/signup)
+- Mobile & Desktop responsive UI
+- Dark & clean professional design (Material UI inspired)
+- Fast and lightweight frontend with React
+- Backend with Node.js & Express
+- Smart file previews & info cards
 
 ---
-
-## 🛠️ Getting Started
-
-> 💡 Make sure you have **Node.js**, **npm/yarn**, and **MongoDB** installed.
-
-### 1. Clone the repo:
-
-```bash
-git clone https://github.com/yourusername/goriber-drive.git
-cd goriber-drive
-```
