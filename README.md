@@ -1,17 +1,15 @@
-# 🧠 Goriber Drive
+<p align="center">
+  <img src="https://raw.githubusercontent.com/abdullah-al-mridul/goriber-drive/refs/heads/main/public/img/20250706_1717_Goriber%20Drive%20Banner_remix_01jzfq4e8yeceay755vprya5ky.png" alt="Goriber Drive Banner" width="800"/>
+</p>
 
-> 🔐 Your personal cloud, hosted right from your own hard drive!  
-> No subscription. No storage limits (except your own HDD 😅).  
-> 💻 PC এবং 📱 Mobile—দুইতেই চলবে দারুণভাবে!
+# Goriber Drive
+
+> Your personal cloud, hosted right from your own hard drive!  
+> No subscription. No storage limits (except your own HDD 😅).
 
 ---
 
 ### 📸 Previews
-
-<p align="center">
-  <img src="./assets/banner.png" alt="Goriber Drive Banner" width="800"/>
-  <br/><em>Fig 1. Goriber Drive — Banner</em>
-</p>
 
 <p align="center">
   <img src="./assets/homepage.png" alt="Goriber Drive Homepage" width="800"/>
@@ -27,7 +25,7 @@
 
 ## 🚀 What is Goriber Drive?
 
-**Goriber Drive** is a self-hosted cloud storage solution for developers, students, and broke legends 🥲 who want full control over their files, stored directly in their own PC or mobile device.
+**Goriber Drive** is a self-hosted cloud storage solution for developers, students, and broke legends who want full control over their files, stored directly in their own PC or mobile device.
 
 ### ✅ Features
 
