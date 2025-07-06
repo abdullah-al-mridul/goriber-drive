@@ -44,7 +44,7 @@ const FileUploadContainer: React.FC<FileUploadContainerProps> = ({
         className="overflow-hidden transition-all duration-500 ease-in-out"
         style={{ maxHeight: height }}
       >
-        <div className="p-4 text-white max-h-80 overflow-auto text-sm space-y-3">
+        <div className="p-4 text-white max-h-80 overflow-auto custom_scrollbar text-sm space-y-3">
           {fileUploading
             ?.slice()
             .reverse()

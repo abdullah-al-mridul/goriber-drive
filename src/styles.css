@@ -3,3 +3,21 @@
   font-family: "Josefin Sans", sans-serif;
   user-select: none;
 }
+.custom_scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom_scrollbar::-webkit-scrollbar-track {
+  background: #64748b26;
+  /* border-radius: 8px; */
+}
+
+.custom_scrollbar::-webkit-scrollbar-thumb {
+  background-color: #3b83f694;
+  border-radius: 2px;
+}
+
+.custom_scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #3b83f694;
+}
