@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/abdullah-al-mridul/goriber-drive/refs/heads/main/public/img/lock-screen.png" alt="Goriber Drive Login Page" width="400"/>
+  <img src="https://raw.githubusercontent.com/abdullah-al-mridul/goriber-drive/refs/heads/main/public/img/lock-screen.png" alt="Goriber Drive Login Page" width="800"/>
   <br/><em>Secure Lock — For your eyes only</em>
 </p>
 
