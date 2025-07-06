@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "./Header";
 import FileGrid from "./FileGrid";
 import Sidebar from "./Sidebar";
@@ -24,7 +24,7 @@ const Dashboard: React.FC<DashboardProps> = ({ onLogout }) => {
       />
       <div className="flex flex-1">
         <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-        <main className="flex-1 p-3 sm:p-4 lg:p-6 max-lg:ml-64">
+        <main className="flex-1 p-3 sm:p-4 lg:p-6 min-lg:ml-64">
           <FileGrid searchQuery={searchQuery} />
         </main>
       </div>

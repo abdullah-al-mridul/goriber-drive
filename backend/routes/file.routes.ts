@@ -173,9 +173,11 @@ fileRouter.get("/fileInfo", auth, (req: any, res: any) => {
 fileRouter.get("/download", auth, (req: any, res: any) => {
   const { filename } = req.query;
   const uploadDir = env.DATA_PATH;
+
   if (!filename || typeof filename !== "string" || filename.trim() === "") {
     return res.status(400).json({ message: "Filename is required" });
   }
+
   if (
     typeof uploadDir === "string" &&
     uploadDir.trim() !== "" &&
@@ -186,15 +188,22 @@ fileRouter.get("/download", auth, (req: any, res: any) => {
     if (!fs.existsSync(filePath)) {
       return res.status(404).json({ message: "File not found" });
     }
+
     res.download(filePath, (err: any) => {
-      if (err) {
+      if (err && !res.headersSent) {
         console.error("Error downloading file:", err);
-        return res.status(500).json({ message: "Internal server error" });
+        try {
+          res.status(500).json({ message: "Internal server error" });
+        } catch (e) {
+          console.error("Failed to send error response:", e);
+        }
+      } else if (err) {
+        console.error("Download aborted or connection lost:", err.message);
       }
     });
   } else {
     console.error(
-      "DATA_PATH is not set or is not a string. If data path set then make sure it is a valid folder in that directory ."
+      "DATA_PATH is not set or is not a string. If data path set then make sure it is a valid folder in that directory."
     );
     return res.status(500).json({ message: "Internal server error" });
   }

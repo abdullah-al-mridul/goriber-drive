@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import api from "../api/axios";
-import type { AxiosProgressEvent } from "axios";
+import type { AxiosProgressEvent, AxiosResponse } from "axios";
 import { formatBytes } from "../utils/format";
 
 interface FileInterface {
@@ -23,6 +23,7 @@ interface FileStore {
   fileUploading: FileUploadingItem[];
   getFiles: (page: number) => Promise<void>;
   fileUpload: (file: any) => Promise<void>;
+  fileDelete: (filename: string) => Promise<void>;
 }
 
 const useFileStore = create<FileStore>((set, get) => ({
@@ -89,6 +90,21 @@ const useFileStore = create<FileStore>((set, get) => ({
     } catch (err) {
       console.error("Upload failed:", err);
       throw err;
+    }
+  },
+  fileDelete: async (filename) => {
+    try {
+      await api.delete("/file-api/delete", {
+        params: { filename },
+      });
+      const files = get().files;
+      if (files) {
+        const updatedFiles = files.filter((file) => file.name !== filename);
+        set({ files: updatedFiles });
+      }
+      console.log(`File deleted successfully: ${filename}`);
+    } catch (error) {
+      console.error("Failed to delete file:", error);
     }
   },
 }));

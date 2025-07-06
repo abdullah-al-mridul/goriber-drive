@@ -56,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
       {/* Sidebar */}
       <aside
         className={`
-        fixed lg:static inset-y-0 left-0 z-50 w-64  border-r border-white/10 transform transition-transform duration-200 ease-in-out
+        fixed lg:static inset-y-0 left-0 max-lg:backdrop-blur-lg   z-50 w-64  border-r border-white/10 transform transition-transform duration-200 ease-in-out
         ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
       `}
       >
@@ -66,7 +66,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
             <span className="text-white font-medium">Menu</span>
             <button
               onClick={onClose}
-              className="p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
+              className="p-2 text-gray-400 hover:text-white hover:hover:bg-[rgba(100,116,139)]/10 rounded transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -109,7 +109,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
               ))}
             </nav>
           </div>
-
+          <div className=" p-4">
+            <div className="w-full rounded-md text-white flex items-center justify-center text-sm font-semibold tracking-widest border border-white/10 py-3">
+              Developed by{" "}
+              <a
+                href="https://abdullah-al-mridul.is-a.dev/"
+                target="_blank"
+                className="ml-1 text-purple-400 cursor-pointer hover:underline"
+              >
+                Abdullah
+              </a>
+            </div>
+          </div>
           <div className="p-4 py-2 border-t border-white/10">
             <div className=" rounded-lg p-4">
               <div className="flex items-center justify-center gap-2 mb-4 text-gray-500 text-md">

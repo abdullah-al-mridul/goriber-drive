@@ -8,11 +8,11 @@ import {
   File,
   MoreVertical,
   Download,
-  Share,
   Eye,
+  Trash,
 } from "lucide-react";
 import { type FileType } from "../types";
-
+import useFileStore from "../store/files.store";
 interface FileCardProps {
   file: FileType;
 }
@@ -75,7 +75,7 @@ const FileCard: React.FC<FileCardProps> = ({ file }) => {
   const [isHovered, setIsHovered] = useState(false);
   const IconComponent = getFileIcon(file.extension);
   const iconColor = getFileColor(file.extension);
-
+  const { fileDelete } = useFileStore();
   return (
     <div
       className="bg-[rgba(100,116,139)]/10 border border-white/10 rounded-lg p-3 sm:p-4 hover:bg-gray-750 hover:border-white/15 transition-all duration-200 cursor-pointer group"
@@ -93,9 +93,9 @@ const FileCard: React.FC<FileCardProps> = ({ file }) => {
             isHovered ? "opacity-100" : "opacity-0"
           }`}
         >
-          <button className="p-1 rounded hover:bg-gray-700/50 transition-colors">
+          {/* <button className="p-1 rounded hover:bg-gray-700/50 transition-colors">
             <MoreVertical className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400" />
-          </button>
+          </button> */}
         </div>
       </div>
 
@@ -115,18 +115,28 @@ const FileCard: React.FC<FileCardProps> = ({ file }) => {
         <span className="text-gray-500 text-xs">{file.createdAt}</span>
 
         <div
-          className={`flex items-center space-x-1 transition-all duration-200 ${
+          className={`flex items-center space-x-1 transition-opacity duration-200 ${
             isHovered ? "opacity-100" : "opacity-0"
-          }`}
+          } max-sm:opacity-100`}
         >
           <button className="p-1 rounded hover:bg-gray-700/50 transition-colors">
             <Eye className="w-3 h-3 text-gray-400 " />
           </button>
-          <button className="p-1 rounded hover:bg-gray-700/50 transition-colors">
+          <button
+            onClick={() =>
+              (window.location.href = `${
+                import.meta.env.VITE_API_URL
+              }/file-api/download?filename=${encodeURIComponent(file.name)}`)
+            }
+            className="p-1 rounded hover:bg-gray-700/50 transition-colors"
+          >
             <Download className="w-3 h-3 text-gray-400 " />
           </button>
-          <button className="p-1 rounded hover:bg-gray-700/50 transition-colors">
-            <Share className="w-3 h-3 text-gray-400 " />
+          <button
+            onClick={() => fileDelete(file.name)}
+            className="p-1 rounded hover:bg-gray-700/50 transition-colors"
+          >
+            <Trash className="w-3 h-3 text-gray-400 " />
           </button>
         </div>
       </div>

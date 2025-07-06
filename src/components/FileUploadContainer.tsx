@@ -19,7 +19,10 @@ const FileUploadContainer: React.FC<FileUploadContainerProps> = ({
 
   if (fileUploading.length === 0) return;
   return (
-    <div className="fixed bottom-0 right-8 bg-[rgba(100,116,139)]/15 rounded-t-xl backdrop-blur-xl shadow-lg w-80">
+    <div
+      className="fixed bottom-0 right-8 max-sm:right-0 max-sm:w-[calc(100vw-32px)] max-sm:mr-4 
+ mx-auto bg-[rgba(100,116,139)]/15 rounded-t-xl backdrop-blur-xl shadow-lg w-80"
+    >
       {/* Header */}
       <div
         className={`${

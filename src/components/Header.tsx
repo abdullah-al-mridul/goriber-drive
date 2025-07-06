@@ -25,7 +25,7 @@ const Header: React.FC<HeaderProps> = ({
             {/* Mobile Menu Button */}
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 text-gray-400 hover:text-white hover:bg-gray-700 rounded transition-colors"
+              className="lg:hidden p-2 text-gray-300   hover:text-white hover:hover:bg-[rgba(100,116,139)]/10 rounded transition-colors"
             >
               {sidebarOpen ? (
                 <X className="w-5 h-5" />
