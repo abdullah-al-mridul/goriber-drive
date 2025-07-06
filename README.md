@@ -12,13 +12,13 @@
 ### 📸 Previews
 
 <p align="center">
-  <img src="./assets/homepage.png" alt="Goriber Drive Homepage" width="800"/>
-  <br/><em>Fig 2. Homepage — File Upload, Browse, and Manage</em>
+  <img src="https://raw.githubusercontent.com/abdullah-al-mridul/goriber-drive/refs/heads/main/public/img/goriber-drive-banner.png" alt="Goriber Drive Homepage" width="800"/>
+  <br/><em>File Explorer — File Upload, Browse, and Manage</em>
 </p>
 
 <p align="center">
-  <img src="./assets/login.png" alt="Goriber Drive Login Page" width="400"/>
-  <br/><em>Fig 3. Secure Login — For your eyes only 🔒</em>
+  <img src="https://raw.githubusercontent.com/abdullah-al-mridul/goriber-drive/refs/heads/main/public/img/lock-screen.png" alt="Goriber Drive Login Page" width="400"/>
+  <br/><em>Secure Lock — For your eyes only</em>
 </p>
 
 ---
